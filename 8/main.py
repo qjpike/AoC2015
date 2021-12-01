@@ -20,3 +20,10 @@ for i in dat:
             j += 1
 
 print("1:",literals-memory) # 1912 is too high; 1822 too high; 1123 is too low; 1506 is wrong; 1371 is correct.
+
+new_encoding = 0
+for i in dat:
+    new_encoding += 2 + i.count("\\") + i.count('\"')
+
+
+print("2:",new_encoding) # 1573 - too low;

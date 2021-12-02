@@ -24,29 +24,21 @@ for i in fd:
 
 print("1:",len(ends)) # 139325854187520 too high $ 419 too low
 
+
 def part2(): # this is a dfs of all combinations that build from 'e' to the input value. It takes way too long to run.
-    import collections
-    queue = collections.deque()
-    queue.append(('e',0))
+    replacements = [(i[0], i[2]) for i in dat]
+    replacements = sorted(replacements, key=lambda x: -len(x[-1]))
+
+    temp = inp
     prev = 0
     while True:
-        now,cnt = queue.popleft()
-        if cnt > prev:
-            print(cnt)
-            prev = cnt
-        for i in fd:
-            for j in range(0,len(now)):
-                if now[j:].startswith(i):
-                    for k in fd[i]:
-                        new = now[:j] + k + now[j+len(i):]
-                        if new == inp:
-                            return cnt + 1
-                        else:
-                            if new not in set(queue):
-                                queue.append((new,cnt+1))
+        for i in replacements:
+            cnt = 0
+            while i[1] in temp:
+                cnt += 1
+                temp = temp.replace(i[1], i[0], 1)
+            prev += cnt
+        if temp == 'e':
+            return prev
 
-print(part2())
-
-in2 = inp.__reversed__()
-
-
+print("2:",part2())
